@@ -1,0 +1,24 @@
+application: mapr
+version: alpha
+runtime: php55
+api_version: 1
+threadsafe: yes
+
+handlers:
+
+# Mapr Operations
+
+- url: /mapr/.*
+  script: public/control.php
+  login: admin
+
+# Job control
+
+- url: /job/.*
+  script: public/control.php
+
+# Default handler
+
+- url: .*
+  script: public/manager.php
+  login: required
