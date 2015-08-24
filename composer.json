@@ -1,0 +1,33 @@
+{
+    "name": "tomwalder/php-map-reduce",
+    "type": "library",
+    "description": "MapReduce Library for PHP",
+    "keywords": ["MapReduce", "php"],
+    "homepage": "https://github.com/tomwalder/php-map-reduce",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Tom Walder",
+            "email": "tom@docnet.nu"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "league/pipeline": "dev-master",
+        "tomwalder/php-gds": "dev-master",
+        "docnet/php-japi": "2.0.x-dev",
+        "rdlowrey/auryn": "0.15.2",
+        "monolog/monolog": "1.13.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ],
+        "psr-4": {"Mapr\\": "src/Mapr/"}
+    },
+    "include-path": ["src/"]
+}
