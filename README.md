@@ -14,12 +14,9 @@ And a JSON definition file to bring all of this together, which might look a bit
 
 ```json
 {
-    "name": "My first word count",
-    "workload": {
-        "TextFile": {
-            "file": "page-of-text.txt"
-        }
-    },
+    "name": "tomwalder/wordcount",
+    "description": "Example word count MapReduce",
+    "workload": "TextFile",
     "sharder": {
         "FileSplitter": {
             "lines": 10
@@ -29,6 +26,29 @@ And a JSON definition file to bring all of this together, which might look a bit
     "agg": "Summer"
 }
 ```
+## API Endpoints ##
+
+### /job/start ###
+
+- called by remote client or web ui. supplied with any required instance configuration
+- creates new job instance with unique [jiid]
+- creates 1-n shard requests, each with unique [srid]
+- queues 1-n async shard tasks one for each [srid] 
+
+### /mapr/shard ###
+
+- called async by the shard tasks created above
+- passed the [srid]
+- run concurrently with each other
+- builds 1-n work packages (payloads) from the workload
+    - creates a work request with uniue [wid]
+    - queues an async work task for each [wid]
+
+### /mapr/work ###
+
+- does the work on a single payload
+
+### /mapr/agg ###
 
 
 
