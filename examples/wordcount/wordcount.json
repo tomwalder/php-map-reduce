@@ -1,0 +1,12 @@
+{
+    "name": "tomwalder/wordcount",
+    "description": "Example word count MapReduce",
+    "workload": "TextFile",
+    "sharder": {
+        "FileSplitter": {
+            "lines": 10
+        }
+    },
+    "worker": "WordCounter",
+    "agg": "Summer"
+}
