@@ -5,3 +5,44 @@ if (PHP_SAPI !== 'cli') {
     echo 'Warning: Mapr should be invoked via the CLI version of PHP, not the '.PHP_SAPI.' SAPI'.PHP_EOL;
 }
 
+date_default_timezone_set('Europe/London');
+
+$str_autoload_file = __DIR__ . '/../vendor/autoload.php';
+if(!file_exists($str_autoload_file)) {
+    say("Missing autoload file. Run composer?");
+    exit(1);
+}
+require_once($str_autoload_file);
+
+function say($str) {
+    echo $str, PHP_EOL;
+}
+
+// Extract params
+$arr_params = [];
+foreach($argv as $str_arg) {
+    if('--' === substr($str_arg, 0, 2)) {
+        $arr_kv = explode('=', substr($str_arg, 2), 2);
+        $arr_params[$arr_kv[0]] = $arr_kv[1];
+    }
+}
+
+// Assume if there is only 1 parameter that it's the job file
+if(count($arr_params) == 0 && count($argv) == 2) {
+    $arr_params['job'] = $argv[1];
+}
+
+// Check for minimum required params
+foreach(['job'] as $str_param) {
+    if(!isset($arr_params[$str_param])) {
+        say("Missing required parameter: {$str_param}");
+        exit(1);
+    }
+}
+
+// Load the Job from the JSON file supplied
+$obj_loader = new \Mapr\JobBuilder();
+$obj_job = $obj_loader->fromJson($arr_params['job']);
+
+// Temp output
+print_r($obj_job);
